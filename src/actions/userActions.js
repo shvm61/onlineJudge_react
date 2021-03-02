@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { SET_ERRORS, LOADING_UI, CLEAR_ERRORS } from "./types";
+import { SET_ERRORS, LOADING_UI, CLEAR_ERRORS, SET_USER } from "./types";
 export const loginUser = (userData) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
@@ -10,6 +10,11 @@ export const loginUser = (userData) => (dispatch) => {
       //   dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
       console.log(res);
+      setAuthorizationHeader(res.data.token);
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
       //   history.push("/");
     })
     .catch((err) => {
